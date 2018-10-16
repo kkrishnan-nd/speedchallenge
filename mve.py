@@ -10,8 +10,8 @@ def moving_average(x, w):
   ret = np.zeros_like(x)
 
   for i in range(x.shape[0]):
-    idx1 = max(0, i - (w - 1)//2 )
-    idx2 = min(x.shape[0], i + (w-1)//2 + (int(not (w%2)) + 1))
+    idx1 = max(0, i - (w - 1) // 2)
+    idx2 = min(x.shape[0], i + (w - 1) // 2 + (2 - (w % 2)))
 
     ret[i] = np.mean(x[idx1:idx2])
 
@@ -93,7 +93,7 @@ class VelocityEstimator:
 
     return self.scale
 
-  def get_kps(self):
+  def get_kps(self, offset_x=0, offset_y=0):
     if self.pts_prev is None:
       return None
-    return [cv2.KeyPoint(x=p[0][0] + self.kp_offset[0], y=p[0][1] + self.kp_offset[1], _size=10) for p in self.pts_prev]
+    return [cv2.KeyPoint(x=p[0][0] + offset_x, y=p[0][1] + offset_y, _size=10) for p in self.pts_prev]

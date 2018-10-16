@@ -51,7 +51,7 @@ if __name__ == "__main__":
     except:
       scale = None
 
-  ve = VelocityEstimator(FRAMES, gt=gt, scale=scale, kp_offset=(130, 35))
+  ve = VelocityEstimator(FRAMES, gt=gt, scale=scale)
 
   W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
   H = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         frame = cv2.addWeighted(frame, 1, mask_inv, 0.3, 0)
 
         # draw keypoints from current and last frame
-        kps = ve.get_kps()
+        kps = ve.get_kps(35, 130)
         cv2.drawKeypoints(frame, kps, frame, color=(0, 0, 255))
         cv2.drawKeypoints(frame, kps_prev, frame, color=(0, 255, 0))
 
